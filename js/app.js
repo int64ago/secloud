@@ -174,12 +174,12 @@ app.controller('SECloudCtrl', function($scope, $rootScope, $http, $filter, $moda
 					fileInfo = JSON.parse(JSON.stringify(curFile));
 					fileInfo['name'] = fileName;
 					fileInfo['time'] = $filter('date')(fileInfo['time']/10000, 'yyyy-MM-dd HH:mm:ss');
-					if(parseInt(fileInfo['size']/1000000000) != 0){
-						fileInfo['size'] = parseInt(fileInfo['size']/1000000000) + 'MB';
-					}else if(parseInt(fileInfo['size']/1000000) != 0){
-						fileInfo['size'] = parseInt(fileInfo['size']/1000000) + 'MB';
-					}else if(parseInt(fileInfo['size']/1000) != 0){
-						fileInfo['size'] = parseInt(fileInfo['size']/1000) + 'KB';
+					if(parseInt(fileInfo['size']/(1024*1024*1024)) != 0){
+						fileInfo['size'] = parseInt(fileInfo['size']/(1024*1024*1024)) + 'MB';
+					}else if(parseInt(fileInfo['size']/(1024*1024)) != 0){
+						fileInfo['size'] = parseInt(fileInfo['size']/(1024*1024)) + 'MB';
+					}else if(parseInt(fileInfo['size']/1024) != 0){
+						fileInfo['size'] = parseInt(fileInfo['size']/1024) + 'KB';
 					}else{
 						fileInfo['size'] = fileInfo['size'] + 'B';
 					}

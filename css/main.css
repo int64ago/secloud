@@ -67,7 +67,7 @@ table tbody tr:hover{
 .dis-checked{
     color: #EEEEEE;
 }
-img{
+.loading-img{
    display: block;
     margin-left: auto;
     margin-right: auto;

@@ -58,6 +58,7 @@
             <button class="btn btn-primary btn-sm" ng-disabled="!FileList.curChecked" ng-click="NetUtils.deleteFile(FileList.curChecked)">
               <i class="fa fa-times fa-lg"></i> 删除
             </button>
+            <img src="http://int64ago.qiniudn.com/o_19clsd0ih16fhsvfclue191p9.gif" ng-show="globalConfig.loading"></img>
             <span class="label label-info" style="margin-left: 5px;" ng-bind="globalConfig.uploadOK?'上传成功':''"></span>
             <span class="label label-danger" style="margin-left: 5px;" ng-bind="globalConfig.uploadFaild?'上传失败':''"></span>
             <ol class="breadcrumb" style="margin-bottom:0px">
@@ -70,7 +71,7 @@
             </ol>
         </div>
         <div class="container" ng-hide="FileList.qnFiles">
-          <img src="http://int64ago.qiniudn.com/o_19cjhn4mq9bh1cde1plv16781jsu9.gif"></img>
+          <img class="loading-img" src="http://int64ago.qiniudn.com/o_19cjhn4mq9bh1cde1plv16781jsu9.gif"></img>
         </div>
         <table class="table" ng-show="FileList.qnFiles">
           <thead>
