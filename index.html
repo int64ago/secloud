@@ -51,10 +51,10 @@
             <button class="btn btn-primary btn-sm" ng-click="FileList.refresh()">
               <i class="fa fa-refresh fa-lg"></i> 刷新
             </button>
-            <button class="btn btn-primary btn-sm" ng-disabled="!FileList.curChecked"
-                    ng-mouseover="NetUtils.getDownloadUrl(FileList.curChecked)">
+            <a class="btn btn-primary btn-sm" ng-disabled="!FileList.curChecked" ng-href="{{globalConfig.downloadUrl}}"
+                    ng-mouseover="NetUtils.getDownloadUrl(FileList.curChecked)" download>
               <i class="fa fa-cloud-download fa-lg"></i> 下载
-            </button>
+            </a>
             <button class="btn btn-primary btn-sm" ng-disabled="!FileList.curChecked" ng-click="NetUtils.deleteFile(FileList.curChecked)">
               <i class="fa fa-times fa-lg"></i> 删除
             </button>
