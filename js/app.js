@@ -40,7 +40,7 @@ app.controller('SECloudCtrl', function($scope, $rootScope, $http, $filter, $moda
 	};
 	
 	$scope.Config = {
-		domain: '',
+		domain: 'secloud-demo.coding.io',
 		secKey: '',
 		isLogin: true
 	};
