@@ -1,6 +1,7 @@
 # SECloud 安全网盘
 Personal cloud drive focusing on both security and safety.
 
+[演示地址][13]，域名：secloud-demo.coding.io（默认），密码：123456
 特点
 ---
 - 专为注重隐私的`互联网强迫症患者`打造
@@ -75,3 +76,4 @@ OK，此时记下：`BUCKET`、`DOMAIN`、`ACCESS_KEY`、`SECRET_KEY`、`PASSWD`
   [10]: http://int64ago.qiniudn.com/o_19clcsbcsjct1svt1un01ei71kpq9.png
   [11]: http://int64ago.qiniudn.com/o_19clcv14cto7c5qbd9107v1rdqe.png
   [12]: http://int64ago.qiniudn.com/o_19cld039f1pvaf541vheqdn5hmj.png
+  [13]: http://secloud.int64ago.org/
