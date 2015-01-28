@@ -49,7 +49,7 @@ app.controller('SECloudCtrl', function($scope, $rootScope, $http, $filter, $moda
 	};
 	
 	$scope.Config = {
-		domain: 'secloud-demo.coding.io',
+		domain: localStorage.domain || '',
 		secKey: '',
 		isLogin: true
 	};
@@ -91,6 +91,7 @@ app.controller('SECloudCtrl', function($scope, $rootScope, $http, $filter, $moda
 		login: function(){
 			$http.post('http://'+ $scope.Config.domain + '/login', {passwd: md5.createHash($scope.Config.secKey)},
 				{withCredentials: true}).success(function(data){
+					localStorage.domain = $scope.Config.domain;
 				$scope.NetUtils.fetchFiles(function(){
 					$scope.FileList.getFileListWithPrefix($scope.FilePath.getPrefix());
 				});
