@@ -1,17 +1,18 @@
 # SECloud 安全网盘
-Personal cloud drive focusing on both security and safety.
 
-[演示地址][13]，域名：secloud-demo.coding.io（默认），密码：123456
+[演示地址][13]，认证域名：`secloud-demo.coding.io`，密码：`123456`
 特点
 ---
 - 专为注重隐私的`互联网强迫症患者`打造
-- 文件云端加密存储，本地上传/下载自动加解密
+- 文件云端加密存储，本地加解密
 - 客户端与服务端分离，个人部署只需部署服务端，客户端通用跨平台
 - 云存储商和服务端托管商可自由替换，选择自己最信任的，甚至自己搭建
 - Javascript全栈：前端为`AngularJS`，后端为`NodeJS`+`ExpressJS`
 
 部署
 ---
+需结合服务端[secloud-server][14]
+
 `注：这里的演示部署仅仅是个参考，如果你愿意修改，怎么玩都可以`
 
 目前存储用的是[七牛云存储][1]，服务端托管于[Coding][2]，客户端直接由Github Pages托管，接下来你需要：
@@ -76,3 +77,4 @@ OK，此时记下：`BUCKET`、`DOMAIN`、`ACCESS_KEY`、`SECRET_KEY`、`PASSWD`
   [11]: http://int64ago.qiniudn.com/o_19clcv14cto7c5qbd9107v1rdqe.png
   [12]: http://int64ago.qiniudn.com/o_19cld039f1pvaf541vheqdn5hmj.png
   [13]: http://secloud.int64ago.org/
+  [14]: https://github.com/int64ago/secloud-server
