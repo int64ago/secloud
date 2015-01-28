@@ -11,6 +11,15 @@ app.controller('SECloudCtrl', function($scope, $rootScope, $http, $filter, $moda
 	            <button class="btn btn-primary" ng-click="ok()" ng-disabled="isFolderNameAvaliable() != \'OK\'">确定</button>\
 	            <button class="btn btn-warning" ng-click="cancel()">取消</button>\
 	        </div>',
+	    deleteWarningTemplate: '\
+	        <div class="modal-body" style="padding-bottom: 0px;">\
+	            <span class="font-chinese">[ {{delteFileName}} ]</span> </br>\
+	            <span class="font-chinese">将被删除</span>\
+	        </div>\
+	        <div class="modal-footer">\
+	            <button class="btn btn-primary" ng-click="ok()">确定</button>\
+	            <button class="btn btn-warning" ng-click="cancel()">取消</button>\
+	        </div>',
 		typeIcon: {
 		    'folder': 'fa fa-folder',
 		    'zip': 'fa fa-file-archive-o',
@@ -235,6 +244,21 @@ app.controller('SECloudCtrl', function($scope, $rootScope, $http, $filter, $moda
 				$scope.FileList.getFileListWithPrefix($scope.FilePath.getPrefix());
 				$scope.FileList.curChecked = null;
 			});
+		},
+		deleteFile: function(key){
+			var modalInstance = $modal.open({
+				template: Utils.deleteWarningTemplate,
+				controller: 'DeleteWarningCtrl',
+				size: 'sm',
+				resolve: {
+					delteFileName: function () {
+						return $scope.FileList.curChecked.name;
+					}
+			    }
+			});
+			modalInstance.result.then(function () {
+				$scope.NetUtils.deleteFile(key);
+			});
 		}
 	};
 
@@ -287,6 +311,16 @@ app.controller('FolerInputCtrl', function ($scope, $modalInstance, fileList) {
   	$scope.cancel = function () {
     	$modalInstance.dismiss('cancel');
   	};
+});
+
+app.controller('DeleteWarningCtrl', function ($scope, $modalInstance, delteFileName){
+	$scope.delteFileName = delteFileName;
+	$scope.ok = function () {
+		$modalInstance.close();
+	};
+	$scope.cancel = function () {
+		$modalInstance.dismiss('cancel');
+	};
 });
 
 app.directive('ngFileSelect', ['$rootScope', '$http', '$timeout', function ($rootScope, $http, $timeout) {
