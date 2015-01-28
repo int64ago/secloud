@@ -51,11 +51,19 @@ app.controller('SECloudCtrl', function($scope, $rootScope, $http, $filter, $moda
 		loading: false,
 		uploadOK: false,
 		uploadFaild: false,
+		fileExist: false,
 		refresh: function(){
 			$scope.FileList.refresh()
 		},
 		getPrefix: function(){
 			return $scope.FilePath.getPrefix();
+		},
+		isFileExist: function(fileName){
+			for(var key in $scope.FileList.list){
+				if($scope.FileList.list[key]['name'] == fileName && $scope.FileList.list[key]['size'] != '-')
+					return true;
+			}
+			return false;
 		}
 	};
 
@@ -283,12 +291,20 @@ app.controller('FolerInputCtrl', function ($scope, $modalInstance, fileList) {
 
 app.directive('ngFileSelect', ['$rootScope', '$http', '$timeout', function ($rootScope, $http, $timeout) {
     return function (scope, ele, attr) {
+		ele.bind('click', function(e){
+			ele.children()[1].value = "";
+		});
         ele.bind('change', function (e) {
             var file = e.target.files[0];
             if (file == undefined) {
             	console.log('no file');
                 return false;
             }
+			if($rootScope.globalConfig.isFileExist(file.name)){
+				$rootScope.globalConfig.fileExist = true;
+				$timeout(function(){$rootScope.globalConfig.fileExist = false;}, 3000);
+				return;
+			}
             $rootScope.globalConfig.loading = true;
             var form = new FormData();
             form.append('token', $rootScope.globalConfig.uploadToken);
