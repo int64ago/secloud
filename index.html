@@ -62,10 +62,14 @@
             <button class="btn btn-primary btn-sm" ng-click="FileList.refresh()">
               <i class="fa fa-refresh fa-lg"></i> 刷新
             </button>
-            <span class="btn btn-primary btn-sm" ng-disabled="!FileList.curChecked || NetUtils.isDownloading" ng-click="NetUtils.downloadFile()"
+            <span class="btn btn-primary btn-sm" ng-show="FileList.curChecked && FileList.curChecked.encrypted" ng-click="NetUtils.downloadFile()"
                   ng-mouseover="NetUtils.getDownloadUrl(FileList.curChecked)">
               <i class="fa fa-cloud-download fa-lg"></i> 下载
             </span>
+            <a class="btn btn-primary btn-sm" ng-hide="FileList.curChecked && FileList.curChecked.encrypted" ng-disabled="!FileList.curChecked" ng-href="{{globalConfig.downloadUrl}}"
+                    ng-mouseover="NetUtils.getDownloadUrl(FileList.curChecked)" download>
+              <i class="fa fa-cloud-download fa-lg"></i> 下载
+            </a>
             <button class="btn btn-primary btn-sm" ng-disabled="!FileList.curChecked" ng-click="FileList.deleteFile(FileList.curChecked)">
               <i class="fa fa-times fa-lg"></i> 删除
             </button>

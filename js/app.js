@@ -122,8 +122,9 @@ app.controller('SECloudCtrl', function($scope, $rootScope, $http, $filter, $moda
 		},
 		getDownloadUrl: function(key){
 			if(!key) return;
-			key = $scope.FilePath.getPrefix() + key.name;
-			$http.jsonp('http://'+ $scope.Config.domain +'/downloadurl?key=' + key + '&&callback=JSON_CALLBACK').
+			var keyString = $scope.FilePath.getPrefix() + key.name;
+			if(key.encrypted) keyString += '@SECloud';
+			$http.jsonp('http://'+ $scope.Config.domain +'/downloadurl?key=' + keyString + '&&callback=JSON_CALLBACK').
 			success(function(data){
 				$rootScope.globalConfig.downloadUrl = data.downloadUrl;
 			}).error(function(){
