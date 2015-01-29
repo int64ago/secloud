@@ -365,8 +365,8 @@ app.directive('ngFileSelect', ['$rootScope', '$http', '$timeout', function ($roo
 				return;
 			}
 			var fileReader = new FileReader();
+			$rootScope.globalConfig.loading = true;
 			fileReader.onload = function() {
-				$rootScope.globalConfig.loading = true;
 				var wordArray = CryptoJS.lib.WordArray.create(new Uint8Array(this.result));
 				var encrypted = CryptoJS.AES.encrypt(wordArray, $rootScope.globalConfig.secKey);
 				//TODO: Uploading binary stream insted of Base64 string
