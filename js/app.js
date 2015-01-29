@@ -266,7 +266,7 @@ app.controller('SECloudCtrl', function ($scope, $rootScope, $http, $filter, $mod
             $scope.FileList.list = files;
         },
         getFileIcon: function (fileInfo) {
-            var subffix = fileInfo['name'].split(".").pop();
+            var subffix = fileInfo['name'].split(".").pop().toLowerCase();
             if (fileInfo['size'] == '-') {
             	return Utils.typeIcon['folder'];
             } else {
