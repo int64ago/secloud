@@ -131,10 +131,12 @@ app.controller('SECloudCtrl', function($scope, $rootScope, $http, $filter, $moda
 		},
 		deleteFile: function(key){
 			if(!key) return;
-			key = $scope.FilePath.getPrefix() + key.name;
-			$http.post('http://'+ $scope.Config.domain + '/delete', {key: key}, {withCredentials: true}).
+			var keyString = $scope.FilePath.getPrefix() + key.name;
+			keyString += key.encrypted?'@SECloud':'';
+			console.log(keyString);
+			$http.post('http://'+ $scope.Config.domain + '/delete', {key: keyString}, {withCredentials: true}).
 			success(function(data){
-				console.log('Delete file: ' + key);
+				console.log('Delete file: ' + keyString);
 				$scope.FileList.refresh();
 			}).error(function(){
 				console.log('Delete file err!');
