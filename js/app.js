@@ -229,9 +229,9 @@ app.controller('SECloudCtrl', function ($scope, $rootScope, $http, $filter, $mod
                 var curFileName = curFile['name'];
                 if (!curFileName.match(prefix)) continue;
                 var fileName = curFileName.substring(prefix.length);
-                var subffix = fileName.split('/')[0];
+                var suffix = fileName.split('/')[0];
                 var fileInfo = {};
-                if (subffix == fileName) {
+                if (suffix == fileName) {
                     fileInfo = JSON.parse(JSON.stringify(curFile));
                     if (fileName.split('@').pop() == 'SECloud') {
                         fileInfo['encrypted'] = true;
@@ -252,27 +252,27 @@ app.controller('SECloudCtrl', function ($scope, $rootScope, $http, $filter, $mod
                     }
                     fileInfo['checked'] = false;
                     files.push(fileInfo);
-                } else if (!dirSet.has(subffix)) {
+                } else if (!dirSet.has(suffix)) {
                     fileInfo = JSON.parse(JSON.stringify(curFile));
                     fileInfo['encrypted'] = false;
-                    fileInfo['name'] = subffix;
+                    fileInfo['name'] = suffix;
                     fileInfo['size'] = '-';
                     fileInfo['time'] = '-';
                     fileInfo['checked'] = false;
-                    dirSet.add(subffix);
+                    dirSet.add(suffix);
                     files.push(fileInfo);
                 }
             }
             $scope.FileList.list = files;
         },
         getFileIcon: function (fileInfo) {
-            var subffix = fileInfo['name'].split(".").pop().toLowerCase();
+            var suffix = fileInfo['name'].split(".").pop().toLowerCase();
             if (fileInfo['size'] == '-') {
-            	return Utils.typeIcon['folder'];
+                return Utils.typeIcon['folder'];
             } else {
-            	if (subffix in Utils.typeIcon && fileInfo['name'].length - subffix.length > 1) {
-            		return Utils.typeIcon[subffix];
-            	}
+                if (suffix in Utils.typeIcon && fileInfo['name'].length - suffix.length > 1) {
+                   return Utils.typeIcon[suffix];
+                }
             }
             return Utils.typeIcon['unknown'];
         },
