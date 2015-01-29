@@ -61,6 +61,7 @@ app.controller('SECloudCtrl', function($scope, $rootScope, $http, $filter, $moda
 		uploadOK: false,
 		uploadFaild: false,
 		fileExist: false,
+		withEnc: false,
 		secKey: $scope.Config.secKey,
 		refresh: function(){
 			$scope.FileList.refresh()
@@ -373,32 +374,53 @@ app.directive('ngFileSelect', ['$rootScope', '$http', '$timeout', function ($roo
 				$timeout(function(){$rootScope.globalConfig.fileExist = false;}, 3000);
 				return;
 			}
-			var fileReader = new FileReader();
-			$rootScope.globalConfig.loading = true;
-			fileReader.onload = function() {
-				var wordArray = CryptoJS.lib.WordArray.create(new Uint8Array(this.result));
-				var encrypted = CryptoJS.AES.encrypt(wordArray, $rootScope.globalConfig.secKey);
-				//TODO: Uploading binary stream insted of Base64 string
-				var blob = new Blob( [ encrypted ], { type: "application/octet-binary" } );
+			if($rootScope.globalConfig.withEnc){
+				var fileReader = new FileReader();
+				$rootScope.globalConfig.loading = true;
+				fileReader.onload = function() {
+					var wordArray = CryptoJS.lib.WordArray.create(new Uint8Array(this.result));
+					var encrypted = CryptoJS.AES.encrypt(wordArray, $rootScope.globalConfig.secKey);
+					//TODO: Uploading binary stream insted of Base64 string
+					var blob = new Blob( [ encrypted ], { type: "application/octet-binary" } );
+					var form = new FormData();
+					form.append('token', $rootScope.globalConfig.uploadToken);
+					form.append('key', $rootScope.globalConfig.getPrefix() + file.name + '@SECloud');
+					form.append("file", blob);
+					$http.post('http://up.qiniu.com', form, {
+						transformRequest: angular.identity,
+						headers: {'Content-Type': undefined}
+					}).success(function (data) {
+						$rootScope.globalConfig.loading = false;
+						$rootScope.globalConfig.uploadOK = true;
+						$rootScope.globalConfig.refresh();
+						$timeout(function(){$rootScope.globalConfig.uploadOK = false;}, 3000);
+					}).error(function(){
+						$rootScope.globalConfig.loading = false;
+						$rootScope.globalConfig.uploadFaild = true;
+						$timeout(function(){$rootScope.globalConfig.uploadFaild = false;}, 3000);
+					});
+				};
+				fileReader.readAsArrayBuffer(file);
+			}else{
+				$rootScope.globalConfig.loading = true;
 				var form = new FormData();
-	            form.append('token', $rootScope.globalConfig.uploadToken);
-	            form.append('key', $rootScope.globalConfig.getPrefix() + file.name + '@SECloud');
-	            form.append("file", blob);
-	            $http.post('http://up.qiniu.com', form, {
-	                transformRequest: angular.identity,
-	                headers: {'Content-Type': undefined}
-	            }).success(function (data) {
+				form.append('token', $rootScope.globalConfig.uploadToken);
+				form.append('key', $rootScope.globalConfig.getPrefix() + file.name);
+				form.append("file", file);
+				$http.post('http://up.qiniu.com', form, {
+					transformRequest: angular.identity,
+					headers: {'Content-Type': undefined}
+				}).success(function (data) {
 					$rootScope.globalConfig.loading = false;
 					$rootScope.globalConfig.uploadOK = true;
 					$rootScope.globalConfig.refresh();
 					$timeout(function(){$rootScope.globalConfig.uploadOK = false;}, 3000);
-	            }).error(function(){
+				}).error(function(){
 					$rootScope.globalConfig.loading = false;
 					$rootScope.globalConfig.uploadFaild = true;
 					$timeout(function(){$rootScope.globalConfig.uploadFaild = false;}, 3000);
-	            });
-			};
-			fileReader.readAsArrayBuffer(file);
+				});
+			}
         });
     };
 }]);
