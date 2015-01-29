@@ -79,11 +79,13 @@ app.controller('SECloudCtrl', function ($scope, $rootScope, $http, $filter, $mod
 
     $scope.NetUtils = {
         isDownloading: false,
+        firstUser: false,
         fetchFiles: function (callback) {
             $scope.FileList.qnFiles = [];
             $http.jsonp('http://' + $scope.Config.domain + '/list?callback=JSON_CALLBACK').
             success(function (data) {
                 $scope.FileList.qnFiles = data;
+                $scope.NetUtils.firstUser = data[0]?false:true;
                 callback();
             }).
             error(function () {
