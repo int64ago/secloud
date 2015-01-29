@@ -224,7 +224,7 @@ app.controller('SECloudCtrl', function ($scope, $rootScope, $http, $filter, $mod
         list: [],
         getFileListWithPrefix: function (prefix) {
             $scope.FileList.list = [];
-            var dirSet = new Set();
+            var dirSet = {}
             var files = [];
             for (var key in $scope.FileList.qnFiles) {
                 var curFile = $scope.FileList.qnFiles[key];
@@ -254,14 +254,14 @@ app.controller('SECloudCtrl', function ($scope, $rootScope, $http, $filter, $mod
                     }
                     fileInfo['checked'] = false;
                     files.push(fileInfo);
-                } else if (!dirSet.has(suffix)) {
+                } else if (!dirSet[suffix]) {
                     fileInfo = JSON.parse(JSON.stringify(curFile));
                     fileInfo['encrypted'] = false;
                     fileInfo['name'] = suffix;
                     fileInfo['size'] = '-';
                     fileInfo['time'] = '-';
                     fileInfo['checked'] = false;
-                    dirSet.add(suffix);
+                    dirSet[suffix] = true;
                     files.push(fileInfo);
                 }
             }
