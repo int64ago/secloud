@@ -78,6 +78,7 @@ app.controller('SECloudCtrl', function($scope, $rootScope, $http, $filter, $moda
 	};
 
 	$scope.NetUtils = {
+		isDownloading: false,
 		fetchFiles: function(callback){
 			$scope.FileList.qnFiles = [];
 			$http.jsonp('http://'+ $scope.Config.domain +'/list?callback=JSON_CALLBACK').
@@ -137,6 +138,28 @@ app.controller('SECloudCtrl', function($scope, $rootScope, $http, $filter, $moda
 				$scope.FileList.refresh();
 			}).error(function(){
 				console.log('Delete file err!');
+			});
+		},
+		downloadFile: function(){
+			//TODO: Exception handling
+			$scope.NetUtils.isDownloading = true;
+			$http.get($rootScope.globalConfig.downloadUrl).then(function (data) {
+				var decrypted = CryptoJS.AES.decrypt(data.data, $scope.Config.secKey);
+				var latinString = decrypted.toString(CryptoJS.enc.Latin1);
+				var bytes = new Uint8Array(latinString.length);
+				for (var i = 0; i < latinString.length; i++)
+					bytes[i] = latinString.charCodeAt(i);
+				var blob = new Blob( [ bytes ], { type: "application/octet-binary" } );
+				var url  = window.URL.createObjectURL(blob);
+				var a = document.createElement("a");
+				document.body.appendChild(a);
+				a.style = "display: none";
+				a.href = url;
+				a.download = $scope.FileList.curChecked.name;
+				a.click();
+				window.URL.revokeObjectURL(url);
+				$scope.NetUtils.isDownloading = false;
+				//TODO: Delete node after downloading
 			});
 		}
 	};
@@ -346,6 +369,7 @@ app.directive('ngFileSelect', ['$rootScope', '$http', '$timeout', function ($roo
 				$rootScope.globalConfig.loading = true;
 				var wordArray = CryptoJS.lib.WordArray.create(new Uint8Array(this.result));
 				var encrypted = CryptoJS.AES.encrypt(wordArray, $rootScope.globalConfig.secKey);
+				//TODO: Uploading binary stream insted of Base64 string
 				var blob = new Blob( [ encrypted ], { type: "application/octet-binary" } );
 				var form = new FormData();
 	            form.append('token', $rootScope.globalConfig.uploadToken);
