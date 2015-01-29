@@ -226,14 +226,14 @@ app.controller('SECloudCtrl', function($scope, $rootScope, $http, $filter, $moda
 						fileInfo['name'] = fileName;
 					}
 					fileInfo['time'] = $filter('date')(fileInfo['time']/10000, 'yyyy-MM-dd HH:mm:ss');
-					if(parseInt(fileInfo['size']/(1024*1024*1024)) != 0){
-						fileInfo['size'] = parseInt(fileInfo['size']/(1024*1024*1024)) + 'MB';
-					}else if(parseInt(fileInfo['size']/(1024*1024)) != 0){
-						fileInfo['size'] = parseInt(fileInfo['size']/(1024*1024)) + 'MB';
-					}else if(parseInt(fileInfo['size']/1024) != 0){
-						fileInfo['size'] = parseInt(fileInfo['size']/1024) + 'KB';
-					}else{
+					if(parseInt(fileInfo['size']/1024) == 0){
 						fileInfo['size'] = fileInfo['size'] + 'B';
+					}else if(parseInt(fileInfo['size']/(1024*1024)) == 0){
+						fileInfo['size'] = parseInt(fileInfo['size']/1024) + 'KB';
+					}else if(parseInt(fileInfo['size']/(1024*1024*1024)) == 0){
+						fileInfo['size'] = parseInt(fileInfo['size']/(1024*1024)) + 'MB';
+					}else{
+						fileInfo['size'] = parseInt(fileInfo['size']/(1024*1024*1024)) + 'GB';
 					}
 					fileInfo['checked'] = false;
 					files.push(fileInfo);
