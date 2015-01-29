@@ -1,6 +1,8 @@
 # SECloud 安全网盘
 
 [演示地址][13]，认证域名：`secloud-demo.coding.io`，密码：`123456`
+
+`注：尚在完善阶段，请勿上传重要文件`
 特点
 ---
 - 专为注重隐私的`互联网强迫症患者`打造
@@ -56,13 +58,6 @@ OK，此时记下：`BUCKET`、`DOMAIN`、`ACCESS_KEY`、`SECRET_KEY`、`PASSWD`
 网盘主界面
 ![][12]
 
-尚未完成的功能
----
- - 客户端文件加解密
- - 上传详细进度条
- - 文件移动操作
- - 稳定性增强
- - 等等
 
   [1]: http://www.qiniu.com/
   [2]: https://coding.net/
