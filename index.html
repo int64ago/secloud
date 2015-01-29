@@ -61,7 +61,7 @@
             <button class="btn btn-primary btn-sm" ng-disabled="!FileList.curChecked" ng-click="FileList.deleteFile(FileList.curChecked)">
               <i class="fa fa-times fa-lg"></i> 删除
             </button>
-            <img src="http://int64ago.qiniudn.com/o_19clsd0ih16fhsvfclue191p9.gif" ng-show="globalConfig.loading"></img>
+            <img src="http://int64ago.qiniudn.com/o_19clsd0ih16fhsvfclue191p9.gif" ng-show="globalConfig.loading || NetUtils.isDownloading"></img>
             <span class="label label-warning" style="margin-left: 5px;" ng-bind="globalConfig.fileExist?'文件已存在':''"></span>
             <span class="label label-info" style="margin-left: 5px;" ng-bind="globalConfig.uploadOK?'上传成功':''"></span>
             <span class="label label-danger" style="margin-left: 5px;" ng-bind="globalConfig.uploadFaild?'上传失败':''"></span>
