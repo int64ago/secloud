@@ -214,7 +214,13 @@ app.controller('SECloudCtrl', function($scope, $rootScope, $http, $filter, $moda
 				var fileInfo = {};
 				if(subffix == fileName){
 					fileInfo = JSON.parse(JSON.stringify(curFile));
-					fileInfo['name'] = fileName;
+					if(fileName.split('@').pop() == 'SECloud'){
+						fileInfo['encrypted'] = true;
+						fileInfo['name'] = fileName.substring(0, fileName.length - '@SECloud'.length);
+					}else{
+						fileInfo['encrypted'] = false;
+						fileInfo['name'] = fileName;
+					}
 					fileInfo['time'] = $filter('date')(fileInfo['time']/10000, 'yyyy-MM-dd HH:mm:ss');
 					if(parseInt(fileInfo['size']/(1024*1024*1024)) != 0){
 						fileInfo['size'] = parseInt(fileInfo['size']/(1024*1024*1024)) + 'MB';
@@ -229,6 +235,7 @@ app.controller('SECloudCtrl', function($scope, $rootScope, $http, $filter, $moda
 					files.push(fileInfo);
 				}else if(!dirSet.has(subffix)){
 					fileInfo = JSON.parse(JSON.stringify(curFile));
+					fileInfo['encrypted'] = false;
 					fileInfo['name'] = subffix;
 					fileInfo['size'] = '-';
 					fileInfo['time'] = '-';
@@ -373,7 +380,7 @@ app.directive('ngFileSelect', ['$rootScope', '$http', '$timeout', function ($roo
 				var blob = new Blob( [ encrypted ], { type: "application/octet-binary" } );
 				var form = new FormData();
 	            form.append('token', $rootScope.globalConfig.uploadToken);
-	            form.append('key', $rootScope.globalConfig.getPrefix() + file.name);
+	            form.append('key', $rootScope.globalConfig.getPrefix() + file.name + '@SECloud');
 	            form.append("file", blob);
 	            $http.post('http://up.qiniu.com', form, {
 	                transformRequest: angular.identity,

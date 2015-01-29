@@ -92,6 +92,7 @@
                 <button class="btn btn-default btn-sm clsbtn" ng-click="FileList.updateCheck(file)">
                   <i class="{{FileList.getFileIcon(file)}}"></i> <span ng-bind="file.name"></span>
                 </button>
+                <i class="fa fa-lock" ng-show="file.encrypted" style="color: green"></i>
               </td>
               <td ng-bind="file.time"></td>
               <td ng-bind="file.size"></td>
