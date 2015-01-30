@@ -62,7 +62,6 @@ app.controller('SECloudCtrl', function ($scope, $rootScope, $http, $filter, $mod
         uploadFaild: false,
         fileExist: false,
         withEnc: false,
-        secKey: $scope.Config.secKey,
         refresh: function () {
             $scope.FileList.refresh()
         },
@@ -90,6 +89,8 @@ app.controller('SECloudCtrl', function ($scope, $rootScope, $http, $filter, $mod
             }).
             error(function () {
                 $scope.Config.isLogin = false;
+                sessionStorage.secKey = '';
+                $scope.Config.secKey = '';
             });
         },
         login: function () {
@@ -103,6 +104,7 @@ app.controller('SECloudCtrl', function ($scope, $rootScope, $http, $filter, $mod
                     $scope.FileList.getFileListWithPrefix($scope.FilePath.getPrefix());
                 });
                 $scope.Config.isLogin = true;
+                sessionStorage.secKey = $scope.Config.secKey;
             }).error(function () {
                 alert('认证失败');
             });
@@ -114,7 +116,6 @@ app.controller('SECloudCtrl', function ($scope, $rootScope, $http, $filter, $mod
                 withCredentials: true
             }).
             success(function (data) {
-                $scope.Config.secKey = '';
                 $scope.NetUtils.fetchFiles(function () {
                     $scope.FileList.getFileListWithPrefix($scope.FilePath.getPrefix());
                 });
@@ -160,7 +161,12 @@ app.controller('SECloudCtrl', function ($scope, $rootScope, $http, $filter, $mod
             //TODO: Exception handling
             $scope.NetUtils.isDownloading = true;
             $http.get($rootScope.globalConfig.downloadUrl).then(function (data) {
-                var decrypted = CryptoJS.AES.decrypt(data.data, $scope.Config.secKey);
+                if (!sessionStorage.secKey) {
+                    $scope.NetUtils.isDownloading = false;
+                    alert('安全密钥无效！请重新登录');
+                    return;
+                }
+                var decrypted = CryptoJS.AES.decrypt(data.data, sessionStorage.secKey);
                 var latinString = decrypted.toString(CryptoJS.enc.Latin1);
                 var bytes = new Uint8Array(latinString.length);
                 for (var i = 0; i < latinString.length; i++){
@@ -397,11 +403,15 @@ app.directive('ngFileSelect', ['$rootScope', '$http', '$timeout', function ($roo
                 return;
             }
             if ($rootScope.globalConfig.withEnc) {
+                if (!sessionStorage.secKey) {
+                    alert('安全密钥无效！请重新登录');
+                    return;
+                }
                 var fileReader = new FileReader();
                 $rootScope.globalConfig.loading = true;
                 fileReader.onload = function () {
                     var wordArray = CryptoJS.lib.WordArray.create(new Uint8Array(this.result));
-                    var encrypted = CryptoJS.AES.encrypt(wordArray, $rootScope.globalConfig.secKey);
+                    var encrypted = CryptoJS.AES.encrypt(wordArray, sessionStorage.secKey);
                     //TODO: Uploading binary stream insted of Base64 string
                     var blob = new Blob([encrypted], {
                         type: "application/octet-binary"
