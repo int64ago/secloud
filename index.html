@@ -13,7 +13,6 @@
     <link rel="stylesheet" href="https://dn-cdnjscn.qbox.me/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://dn-cdnjscn.qbox.me/ajax/libs/bootstrap-material-design/0.2.1/css/material.min.css">
     <link rel="stylesheet" href="https://dn-cdnjscn.qbox.me/ajax/libs/bootstrap-material-design/0.2.1/css/ripples.min.css">
-    <link rel="stylesheet" href="https://dn-cdnjscn.qbox.me/ajax/libs/awesome-bootstrap-checkbox/0.2.3/awesome-bootstrap-checkbox.min.css">
     <link rel="stylesheet" href="css/main.css">
     <script src="https://dn-cdnjscn.qbox.me/ajax/libs/crypto-js/3.1.2/rollups/aes.js"></script>
     <script src="https://dn-cdnjscn.qbox.me/ajax/libs/crypto-js/3.1.2/components/core-min.js"></script>
@@ -47,13 +46,16 @@
     </div>
     <div class="row" ng-show="Config.isLogin">
         <div class="shadow-z-1">
-            <div class="checkbox checkbox-warning pull-left" style="margin-left: 10px;">
-                <input id="checkbox_" type="checkbox" ng-model="globalConfig.withEnc">
-                <label for="checkbox_"></label>
+            <div class="btn-group" style="margin-left: 10px">
+                <a class="btn btn-info btn-sm" href="javascirpt:void(0)" ng-click="globalConfig.withEnc = !globalConfig.withEnc"
+                   style="padding-left: 10px; padding-right: 10px;">
+                    <i class="fa fa-lg" ng-class="{'fa-lock': globalConfig.withEnc, 'fa-unlock': !globalConfig.withEnc}"></i>
+                </a>
+                <span class="btn btn-sm btn-file" ng-class="{'btn-warning': globalConfig.withEnc, 'btn-primary': !globalConfig.withEnc}"
+                      ng-disabled="globalConfig.loading" ng-file-select ng-mouseover="NetUtils.getUploadToken()">
+                    <i class="fa fa-cloud-upload fa-lg"></i> {{globalConfig.withEnc?'加密上传':'普通上传'}}<input type="file">
+                </span>
             </div>
-            <span class="btn btn-primary btn-sm btn-file" ng-disabled="globalConfig.loading" ng-file-select ng-mouseover="NetUtils.getUploadToken()">
-              <i class="fa fa-cloud-upload fa-lg"></i> {{globalConfig.withEnc?'加密上传':'普通上传'}}<input type="file">
-            </span>
             <button class="btn btn-primary btn-sm" ng-click="FileList.refresh()"> <i class="fa fa-refresh fa-lg"></i> 刷新</button>
             <span class="btn btn-primary btn-sm" ng-show="FileList.curChecked && FileList.curChecked.encrypted" ng-click="NetUtils.downloadFile()"
                   ng-mouseover="NetUtils.getDownloadUrl(FileList.curChecked)">
