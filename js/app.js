@@ -11,6 +11,15 @@ app.controller('SECloudCtrl', function ($scope, $rootScope, $http, $filter, $mod
 	            <button class="btn btn-primary" ng-click="ok()" ng-disabled="isFolderNameAvaliable() != \'OK\'">确定</button>\
 	            <button class="btn btn-warning" ng-click="cancel()">取消</button>\
 	        </div>',
+        renameTemplate: '\
+            <div class="modal-body" style="padding-bottom: 0px;">\
+                <input type="text" class="form-control" ng-model="fileName">\
+                <span class="err-hint font-chinese" ng-bind="isFileNameAvaliable()" ng-hide="isFileNameAvaliable() == \'OK\'"></span>\
+            </div>\
+            <div class="modal-footer">\
+                <button class="btn btn-primary" ng-click="ok()" ng-disabled="isFileNameAvaliable() != \'OK\'">确定</button>\
+                <button class="btn btn-warning" ng-click="cancel()">取消</button>\
+            </div>',
         deleteWarningTemplate: '\
 	        <div class="modal-body" style="padding-bottom: 0px;">\
 	            <span class="font-chinese">[ {{delteFileName}} ]</span> </br>\
@@ -144,7 +153,6 @@ app.controller('SECloudCtrl', function ($scope, $rootScope, $http, $filter, $mod
             if (!key) return;
             var keyString = $scope.FilePath.getPrefix() + key.name;
             keyString += key.encrypted ? '@SECloud' : '';
-            console.log(keyString);
             $http.post('http://' + $scope.Config.domain + '/delete', {
                 key: keyString
             }, {
@@ -155,6 +163,25 @@ app.controller('SECloudCtrl', function ($scope, $rootScope, $http, $filter, $mod
                 $scope.FileList.refresh();
             }).error(function () {
                 console.log('Delete file err!');
+            });
+        },
+        renameFile: function (key, newFilename) {
+            if (!key) return;
+            var keySrc = $scope.FilePath.getPrefix() + key.name;
+            var keyDest = $scope.FilePath.getPrefix() + newFilename;
+            keySrc += key.encrypted ? '@SECloud' : '';
+            keyDest += key.encrypted ? '@SECloud' : '';
+            $http.post('http://' + $scope.Config.domain + '/move', {
+                keySrc: keySrc,
+                keyDest: keyDest
+            }, {
+                withCredentials: true
+            }).
+            success(function (data) {
+                console.log('Rename file: ' + keySrc);
+                $scope.FileList.refresh();
+            }).error(function () {
+                console.log('Rename file err!');
             });
         },
         downloadFile: function () {
@@ -323,6 +350,24 @@ app.controller('SECloudCtrl', function ($scope, $rootScope, $http, $filter, $mod
             modalInstance.result.then(function () {
                 $scope.NetUtils.deleteFile(key);
             });
+        },
+        renameFile: function (key) {
+            var modalInstance = $modal.open({
+                template: Utils.renameTemplate,
+                controller: 'RenameCtrl',
+                size: 'sm',
+                resolve: {
+                    fileList: function () {
+                        return $scope.FileList.list;
+                    },
+                    curFileName: function () {
+                        return key.name;
+                    }
+                }
+            });
+            modalInstance.result.then(function (fileNameInput) {
+                $scope.NetUtils.renameFile(key, fileNameInput)
+            });
         }
     };
 
@@ -368,6 +413,30 @@ app.controller('FolerInputCtrl', function ($scope, $modalInstance, fileList) {
     };
     $scope.ok = function () {
         $modalInstance.close($scope.folderName);
+    };
+    $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+    };
+});
+
+app.controller('RenameCtrl', function ($scope, $modalInstance, fileList, curFileName) {
+    $scope.fileName = curFileName;
+    $scope.isFileNameAvaliable = function () {
+        if ($scope.fileName == '') return '请输入新文件名';
+        if ($scope.fileName.match(/\//g)) return "不能包含字符'/'"
+        for (var key in fileList) {
+            if (fileList[key]['name'] == $scope.fileName && fileList[key]['size'] != '-' && $scope.fileName != curFileName) {
+                return '此文件已存在';
+            }
+        }
+        return 'OK';
+    };
+    $scope.ok = function () {
+        if ($scope.fileName == curFileName) {
+            $modalInstance.dismiss('cancel');
+        } else {
+            $modalInstance.close($scope.fileName);
+        }
     };
     $scope.cancel = function () {
         $modalInstance.dismiss('cancel');
