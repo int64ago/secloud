@@ -79,3 +79,9 @@ table tbody tr:hover{
   src: local('Orbitron-Regular'), url(http://int64ago.qiniudn.com/o_19ckm1t8lkna14n01nft1e1g17rl9.ttf) format('truetype');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
 }
+.btn-group{
+  box-shadow: none;
+}
+.btn-group:hover{
+  box-shadow: 0 3px 10px rgba(0,0,0,.23),0 3px 10px rgba(0,0,0,.16);
+}
