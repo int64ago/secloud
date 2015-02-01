@@ -69,7 +69,6 @@ app.controller('SECloudCtrl', function ($scope, $rootScope, $http, $filter, $mod
         loading: false,
         uploadOK: false,
         uploadFaild: false,
-        fileExist: false,
         withEnc: false,
         refresh: function () {
             $scope.FileList.refresh()
@@ -464,12 +463,14 @@ app.directive('ngFileSelect', ['$rootScope', '$http', '$timeout', function ($roo
                 console.log('no file');
                 return false;
             }
-            if ($rootScope.globalConfig.isFileExist(file.name)) {
-                $rootScope.globalConfig.fileExist = true;
-                $timeout(function () {
-                    $rootScope.globalConfig.fileExist = false;
-                }, 3000);
-                return;
+            var fileName = file.name;
+            var insIndex = file.name.length;
+            for (var i = 0; i < file.name.length; ++i) {
+                if (file.name[i] == '.')
+                    insIndex = i;
+            }
+            for (var i = 1; $rootScope.globalConfig.isFileExist(fileName); ++i) {
+                fileName = file.name.substring(0, insIndex) + '(' + i + ')' + file.name.substring(insIndex);
             }
             if ($rootScope.globalConfig.withEnc) {
                 if (!sessionStorage.secKey) {
@@ -487,7 +488,7 @@ app.directive('ngFileSelect', ['$rootScope', '$http', '$timeout', function ($roo
                     });
                     var form = new FormData();
                     form.append('token', $rootScope.globalConfig.uploadToken);
-                    form.append('key', $rootScope.globalConfig.getPrefix() + file.name + '@SECloud');
+                    form.append('key', $rootScope.globalConfig.getPrefix() + fileName + '@SECloud');
                     form.append("file", blob);
                     $http.post('http://up.qiniu.com', form, {
                         transformRequest: angular.identity,
@@ -514,7 +515,7 @@ app.directive('ngFileSelect', ['$rootScope', '$http', '$timeout', function ($roo
                 $rootScope.globalConfig.loading = true;
                 var form = new FormData();
                 form.append('token', $rootScope.globalConfig.uploadToken);
-                form.append('key', $rootScope.globalConfig.getPrefix() + file.name);
+                form.append('key', $rootScope.globalConfig.getPrefix() + fileName);
                 form.append("file", file);
                 $http.post('http://up.qiniu.com', form, {
                     transformRequest: angular.identity,
