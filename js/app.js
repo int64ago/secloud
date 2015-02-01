@@ -1,6 +1,6 @@
-var app = angular.module('SECloud', ['ui.bootstrap', 'angular-md5']);
+var app = angular.module('SECloud', ['ui.bootstrap']);
 
-app.controller('SECloudCtrl', function ($scope, $rootScope, $http, $filter, $modal, $interval, md5) {
+app.controller('SECloudCtrl', function ($scope, $rootScope, $http, $filter, $modal, $interval) {
     var Utils = {
         folderTemplate: '\
 	        <div class="modal-body" style="padding-bottom: 0px;">\
@@ -103,7 +103,7 @@ app.controller('SECloudCtrl', function ($scope, $rootScope, $http, $filter, $mod
         },
         login: function () {
             $http.post('http://' + $scope.Config.domain + '/login', {
-                passwd: md5.createHash($scope.Config.secKey)
+                passwd: CryptoJS.MD5($scope.Config.secKey).toString(CryptoJS.enc.Hex)
             }, {
                 withCredentials: true
             }).success(function (data) {
