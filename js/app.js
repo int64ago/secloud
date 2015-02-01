@@ -183,7 +183,7 @@ app.controller('SECloudCtrl', function ($scope, $rootScope, $http, $filter, $mod
                 console.log('Rename file err!');
             });
         },
-        downloadFile: function () {
+        downloadFile: function (key) {
             //TODO: Exception handling
             $scope.NetUtils.isDownloading = true;
             $http.get($rootScope.globalConfig.downloadUrl).then(function (data) {
@@ -206,7 +206,7 @@ app.controller('SECloudCtrl', function ($scope, $rootScope, $http, $filter, $mod
                 document.body.appendChild(a);
                 a.style = "display: none";
                 a.href = url;
-                a.download = $scope.FileList.curChecked.name;
+                a.download = key.name;
                 a.click();
                 window.URL.revokeObjectURL(url);
                 $scope.NetUtils.isDownloading = false;

@@ -57,7 +57,7 @@
                 </span>
             </div>
             <button class="btn btn-primary btn-sm" ng-click="FileList.refresh()"> <i class="fa fa-refresh fa-lg"></i> 刷新</button>
-            <span class="btn btn-primary btn-sm" ng-show="FileList.curChecked && FileList.curChecked.encrypted" ng-click="NetUtils.downloadFile()"
+            <span class="btn btn-primary btn-sm" ng-show="FileList.curChecked && FileList.curChecked.encrypted" ng-click="NetUtils.downloadFile(FileList.curChecked)"
                   ng-disabled="NetUtils.isDownloading" ng-mouseover="NetUtils.getDownloadUrl(FileList.curChecked)">
               <i class="fa fa-cloud-download fa-lg"></i> 下载
             </span>
