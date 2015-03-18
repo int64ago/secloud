@@ -137,13 +137,14 @@ app.controller('SECloudCtrl', function ($scope, $rootScope, $http, $filter, $mod
                 console.log('Get uploadToken err!');
             });
         },
-        getDownloadUrl: function (key) {
+        getDownloadUrl: function (key, callback) {
             if (!key) return;
             var keyString = $scope.FilePath.getPrefix() + key.name;
             if (key.encrypted) keyString += '@SECloud';
             $http.jsonp('http://' + $scope.Config.domain + '/downloadurl?key=' + keyString + '&&callback=JSON_CALLBACK').
             success(function (data) {
                 $rootScope.globalConfig.downloadUrl = data.downloadUrl;
+                callback && callback(data.downloadUrl);
             }).error(function () {
                 console.log('Get downloadUrl err!');
             });
@@ -366,6 +367,35 @@ app.controller('SECloudCtrl', function ($scope, $rootScope, $http, $filter, $mod
             });
             modalInstance.result.then(function (fileNameInput) {
                 $scope.NetUtils.renameFile(key, fileNameInput)
+            });
+        },
+        isPreviewable: function (key) {
+            if(key['size'] == '-')
+                return false;
+            var suffix = key['name'].split(".").pop().toLowerCase();
+            if(suffix == key['name'])
+                return false;
+            if(['mp4', 'jpeg', 'jpg', 'png', 'gif', 'bmp', 'mp3', 'wav'].indexOf(suffix) == -1)
+                return false;
+            return true;
+        },
+        previewMedia: function (key) {
+            var suffix = key.name.split(".").pop().toLowerCase();
+            $scope.NetUtils.getDownloadUrl(key, function(url){
+                var tmp = '';
+                if(suffix == 'mp4'){
+                    tmp = '<video controls><source src="' + url + '" type="video/mp4"></video>';
+                } else if(suffix == 'mp3' || suffix == 'wav'){
+                    if(suffix == 'mp3') tmp = '<audio controls><source src="' + url + '" type="audio/mpeg"></audio>';
+                    if(suffix == 'wav') tmp = '<audio controls><source src="' + url + '" type="audio/wav"></audio>';
+                } else {
+                    tmp = '<img src="' + url + '">';
+                }
+                console.log(tmp);
+                var modalInstance = $modal.open({
+                    template: tmp,
+                    windowTemplateUrl: "preview.html"
+                });
             });
         }
     };
