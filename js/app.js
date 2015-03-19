@@ -382,19 +382,19 @@ app.controller('SECloudCtrl', function ($scope, $rootScope, $http, $filter, $mod
         previewMedia: function (key) {
             var suffix = key.name.split(".").pop().toLowerCase();
             $scope.NetUtils.getDownloadUrl(key, function(url){
-                var tmp = '';
+                var tmp = '<div><i class="fa fa-times fa-2x close-x" ng-click="cancel()"></i></div>'
                 if(suffix == 'mp4'){
-                    tmp = '<video controls><source src="' + url + '" type="video/mp4"></video>';
+                    tmp += '<video id="video" preload="auto" controls><source src="' + url + '" type="video/mp4"></video>';
                 } else if(suffix == 'mp3' || suffix == 'wav'){
-                    if(suffix == 'mp3') tmp = '<audio controls><source src="' + url + '" type="audio/mpeg"></audio>';
-                    if(suffix == 'wav') tmp = '<audio controls><source src="' + url + '" type="audio/wav"></audio>';
+                    if(suffix == 'mp3') tmp += '<audio controls><source src="' + url + '" type="audio/mpeg"></audio>';
+                    if(suffix == 'wav') tmp += '<audio controls><source src="' + url + '" type="audio/wav"></audio>';
                 } else {
-                    tmp = '<img src="' + url + '">';
+                    tmp += '<img src="' + url + '">';
                 }
-                console.log(tmp);
                 var modalInstance = $modal.open({
                     template: tmp,
-                    windowTemplateUrl: "preview.html"
+                    windowTemplateUrl: "preview.html",
+                    controller: "PreviewCtrl"
                 });
             });
         }
@@ -429,6 +429,12 @@ app.controller('SECloudCtrl', function ($scope, $rootScope, $http, $filter, $mod
         });
         $scope.Action.check();
     })();
+});
+
+app.controller('PreviewCtrl', function ($scope, $modalInstance) {
+    $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+    };
 });
 
 app.controller('FolerInputCtrl', function ($scope, $modalInstance, fileList) {

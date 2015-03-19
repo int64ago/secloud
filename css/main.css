@@ -85,3 +85,9 @@ table tbody tr:hover{
 .btn-group:hover{
   box-shadow: 0 3px 10px rgba(0,0,0,.23),0 3px 10px rgba(0,0,0,.16);
 }
+.close-x:hover {
+    cursor: pointer;
+    color: #fff;
+    transition: 0.5s;
+    transform: rotateY(180deg);
+}

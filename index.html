@@ -102,7 +102,7 @@
                         <i class="{{FileList.getFileIcon(file)}}"></i>  <span ng-bind="file.name"></span>
                       </button>
                       <i class="fa fa-lock" ng-show="file.encrypted" style="color: green"></i>
-                      <a href="#" title="预览" ng-show="!file.encrypted && FileList.isPreviewable(file)" ng-click="FileList.previewMedia(file)">
+                      <a href="javascript:void(0)" title="预览" ng-show="!file.encrypted && FileList.isPreviewable(file)" ng-click="FileList.previewMedia(file)">
                         <i class="fa fa-eye" style="color: #03a9f4"></i>
                       </a>
                     </td>
