@@ -70,6 +70,7 @@ app.controller('SECloudCtrl', function ($scope, $rootScope, $http, $filter, $mod
         uploadOK: false,
         uploadFaild: false,
         withEnc: false,
+        process: 0,
         refresh: function () {
             $scope.FileList.refresh()
         },
@@ -526,25 +527,30 @@ app.directive('ngFileSelect', ['$rootScope', '$http', '$timeout', function ($roo
                     form.append('token', $rootScope.globalConfig.uploadToken);
                     form.append('key', $rootScope.globalConfig.getPrefix() + fileName + '@SECloud');
                     form.append("file", blob);
-                    $http.post('http://up.qiniu.com', form, {
-                        transformRequest: angular.identity,
-                        headers: {
-                            'Content-Type': undefined
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('POST', 'http://up.qiniu.com', true);
+                    xhr.onload = function(e) {
+                        $rootScope.globalConfig.loading = false;
+                        if (this.status == 200) {
+                            $rootScope.globalConfig.uploadOK = true;
+                            $rootScope.globalConfig.refresh();
+                            $timeout(function () {
+                                $rootScope.globalConfig.uploadOK = false;
+                            }, 3000);
+                        } else {
+                            $rootScope.globalConfig.uploadFaild = true;
+                            $timeout(function () {
+                                $rootScope.globalConfig.uploadFaild = false;
+                            }, 3000);
                         }
-                    }).success(function (data) {
-                        $rootScope.globalConfig.loading = false;
-                        $rootScope.globalConfig.uploadOK = true;
-                        $rootScope.globalConfig.refresh();
-                        $timeout(function () {
-                            $rootScope.globalConfig.uploadOK = false;
-                        }, 3000);
-                    }).error(function () {
-                        $rootScope.globalConfig.loading = false;
-                        $rootScope.globalConfig.uploadFaild = true;
-                        $timeout(function () {
-                            $rootScope.globalConfig.uploadFaild = false;
-                        }, 3000);
-                    });
+                    };
+                    xhr.upload.onprogress = function(e) {
+                        if (e.lengthComputable) {
+                            $rootScope.globalConfig.process = Math.floor((e.loaded / e.total) * 100);
+                            $rootScope.$apply();
+                        }
+                    };
+                    xhr.send(form);
                 };
                 fileReader.readAsArrayBuffer(file);
             } else {
@@ -553,25 +559,30 @@ app.directive('ngFileSelect', ['$rootScope', '$http', '$timeout', function ($roo
                 form.append('token', $rootScope.globalConfig.uploadToken);
                 form.append('key', $rootScope.globalConfig.getPrefix() + fileName);
                 form.append("file", file);
-                $http.post('http://up.qiniu.com', form, {
-                    transformRequest: angular.identity,
-                    headers: {
-                        'Content-Type': undefined
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', 'http://up.qiniu.com', true);
+                xhr.onload = function(e) {
+                    $rootScope.globalConfig.loading = false;
+                    if (this.status == 200) {
+                        $rootScope.globalConfig.uploadOK = true;
+                        $rootScope.globalConfig.refresh();
+                        $timeout(function () {
+                            $rootScope.globalConfig.uploadOK = false;
+                        }, 3000);
+                    } else {
+                        $rootScope.globalConfig.uploadFaild = true;
+                        $timeout(function () {
+                            $rootScope.globalConfig.uploadFaild = false;
+                        }, 3000);
                     }
-                }).success(function (data) {
-                    $rootScope.globalConfig.loading = false;
-                    $rootScope.globalConfig.uploadOK = true;
-                    $rootScope.globalConfig.refresh();
-                    $timeout(function () {
-                        $rootScope.globalConfig.uploadOK = false;
-                    }, 3000);
-                }).error(function () {
-                    $rootScope.globalConfig.loading = false;
-                    $rootScope.globalConfig.uploadFaild = true;
-                    $timeout(function () {
-                        $rootScope.globalConfig.uploadFaild = false;
-                    }, 3000);
-                });
+                };
+                xhr.upload.onprogress = function(e) {
+                    if (e.lengthComputable) {
+                        $rootScope.globalConfig.process = Math.floor((e.loaded / e.total) * 100);
+                        $rootScope.$apply();
+                    }
+                };
+                xhr.send(form);
             }
         });
     };

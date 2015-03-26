@@ -71,7 +71,8 @@
             <button class="btn btn-primary btn-sm" ng-disabled="!FileList.curChecked" ng-click="FileList.deleteFile(FileList.curChecked)">
               <i class="fa fa-times fa-lg"></i> 删除
             </button>
-            <img src="http://int64ago.qiniudn.com/o_19clsd0ih16fhsvfclue191p9.gif" ng-show="globalConfig.loading || NetUtils.isDownloading"></img>
+            <img src="http://int64ago.qiniudn.com/o_19clsd0ih16fhsvfclue191p9.gif" ng-show="NetUtils.isDownloading"></img>
+            <span class="label label-info" style="margin-left: 5px;" ng-show="globalConfig.loading && !globalConfig.uploadOK && !globalConfig.uploadFaild">{{globalConfig.process}}%</span>
             <span class="label label-info" style="margin-left: 5px;" ng-bind="globalConfig.uploadOK?'上传成功':''"></span>
             <span class="label label-danger" style="margin-left: 5px;" ng-bind="globalConfig.uploadFaild?'上传失败':''"></span>
             <ol class="breadcrumb" style="margin-bottom:0px">
@@ -82,6 +83,9 @@
                   <a href="javascript:void(0)" title="New Folder" ng-click="FilePath.addFolder()"><i class="fa fa-plus"></i></a>
                 </li>
             </ol>
+        </div>
+        <div class="progress progress-striped" style="margin-bottom: 0px;" ng-show="globalConfig.loading">
+          <div class="progress-bar progress-bar-info" ng-style="{'width':  globalConfig.process + '%'}"></div>
         </div>
         <div class="container" ng-hide="FileList.qnFiles">
             <img class="loading-img" ng-hide="NetUtils.firstUser" src="http://int64ago.qiniudn.com/o_19cjhn4mq9bh1cde1plv16781jsu9.gif"></img>
