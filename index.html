@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html ng-app="SECloud" ng-controller="SECloudCtrl">
+
 <head>
     <meta charset="UTF-8">
     <title>SECloud - 安全网盘</title>
@@ -7,120 +8,117 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="description" content="SECloud 安全网盘">
     <meta name="author" content="Cody Chan">
-    <link rel="shortcut icon" href="http://int64ago.qiniudn.com/o_19ckjiajn91vhd915c417eh1r70e.ico" type="image/x-icon">
-    <link rel="icon" href="http://int64ago.qiniudn.com/o_19ckjiajn91vhd915c417eh1r70e.ico" type="image/x-icon">
-    <link rel="stylesheet" href="https://dn-cdnjscn.qbox.me/ajax/libs/twitter-bootstrap/3.1.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://dn-cdnjscn.qbox.me/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://dn-cdnjscn.qbox.me/ajax/libs/bootstrap-material-design/0.2.1/css/material.min.css">
-    <link rel="stylesheet" href="https://dn-cdnjscn.qbox.me/ajax/libs/bootstrap-material-design/0.2.1/css/ripples.min.css">
+    <link rel="shortcut icon" href="https://dn-getlink.qbox.me/73cofhz6t7qfr.ico" type="image/x-icon">
+    <link rel="stylesheet" href="//dn-cdnjs-cn.qbox.me/ajax/libs/twitter-bootstrap/3.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//dn-cdnjs-cn.qbox.me/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//dn-cdnjs-cn.qbox.me/ajax/libs/bootstrap-material-design/0.2.1/css/material.min.css">
+    <link rel="stylesheet" href="//dn-cdnjs-cn.qbox.me/ajax/libs/bootstrap-material-design/0.2.1/css/ripples.min.css">
+    <link href='//fonts.googleapis.com/css?family=Sigmar+One' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="css/main.css">
-    <script src="https://dn-cdnjscn.qbox.me/ajax/libs/crypto-js/3.1.2/rollups/aes.js"></script>
-    <script src="https://dn-cdnjscn.qbox.me/ajax/libs/crypto-js/3.1.2/rollups/md5.js"></script>
-    <script src="https://dn-cdnjscn.qbox.me/ajax/libs/crypto-js/3.1.2/components/core-min.js"></script>
-    <script src="https://dn-cdnjscn.qbox.me/ajax/libs/crypto-js/3.1.2/components/lib-typedarrays-min.js"></script>
-    <script src="https://dn-cdnjscn.qbox.me/ajax/libs/angular.js/1.2.16/angular.min.js"></script>
-    <script src="https://dn-cdnjscn.qbox.me/ajax/libs/angular-ui-bootstrap/0.12.0/ui-bootstrap-tpls.min.js"></script>
+    <script src="//dn-cdnjs-cn.qbox.me/ajax/libs/crypto-js/3.1.2/rollups/aes.js"></script>
+    <script src="//dn-cdnjs-cn.qbox.me/ajax/libs/crypto-js/3.1.2/rollups/md5.js"></script>
+    <script src="//dn-cdnjs-cn.qbox.me/ajax/libs/crypto-js/3.1.2/components/core-min.js"></script>
+    <script src="//dn-cdnjs-cn.qbox.me/ajax/libs/crypto-js/3.1.2/components/lib-typedarrays-min.js"></script>
+    <script src="//dn-cdnjs-cn.qbox.me/ajax/libs/angular.js/1.2.16/angular.min.js"></script>
+    <script src="//dn-cdnjs-cn.qbox.me/ajax/libs/angular-ui-bootstrap/0.12.0/ui-bootstrap-tpls.min.js"></script>
     <script src="js/app.js"></script>
 </head>
+
 <body ng-mouseover="Action.reset()">
-<div class="navbar navbar-static-top bs-docs-nav sample shadow-z-1" style="margin-bottom: 0px;">
-    <div class="navbar-header">
-        <img class="pull-left" width="60px" height="60px" src="http://int64ago.qiniudn.com/o_19ckjg2t613ku1n6cp8f1c9v1fgb9.png"></img>
-        <a class="navbar-brand" href="/" style="font-size: 35px; font-family: 'Orbitron', sans-serif;">SECloud</a>
-    </div>
-    <div class="navbar-header pull-right" ng-click="NetUtils.logout()" ng-show="Config.isLogin">
-      <a class="navbar-brand shadow-z-2" href="javascript:void(0)" title="注销" style="font-size: 30px;"><i class="fa fa-sign-out"></i></a>
-    </div>
-</div>
-<div class="container-fluid">
-    <div class="row" ng-hide="Config.isLogin">
-        <div class="col-sm-6 col-md-4 col-md-offset-4">
-            <div class="account-wall">
-                <form class="form-signin" ng-submit="NetUtils.login()">
-                    <input type="text" class="form-control" ng-model="Config.domain" placeholder="认证域名，eg：secloud-demo.coding.io" required autofocus>
-                    <input type="password" class="form-control" ng-model="Config.secKey" placeholder="安全密码" required>
-                    <button class="btn btn-lg btn-primary btn-block" ng-disabled="!Config.domain || !Config.secKey" type="submit">登 录</button>
-                </form>
-            </div> <a href="https://github.com/int64ago/secloud" target="_blank" class="text-center new-account">需要帮助</a>
+    <div class="navbar navbar-static-top bs-docs-nav sample shadow-z-1" style="margin-bottom: 0px;">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/" style="font-size: 35px; font-family: 'Sigmar One', cursive;">SECLOUD</a>
+        </div>
+        <div class="navbar-header pull-right" ng-click="NetUtils.logout()" ng-show="Config.isLogin">
+            <a class="navbar-brand shadow-z-2" href="javascript:void(0)" title="注销" style="font-size: 30px;"><i class="fa fa-sign-out"></i></a>
         </div>
     </div>
-    <div class="row" ng-show="Config.isLogin">
-        <div class="shadow-z-1">
-            <div class="btn-group" style="margin-left: 10px">
-                <a class="btn btn-info btn-sm" href="javascript:void(0)" ng-click="globalConfig.withEnc = !globalConfig.withEnc"
-                   style="padding-left: 10px; padding-right: 10px;">
-                    <i class="fa fa-lg" ng-class="{'fa-lock': globalConfig.withEnc, 'fa-unlock-alt': !globalConfig.withEnc}"></i>
-                </a>
-                <span class="btn btn-sm btn-file" ng-class="{'btn-warning': globalConfig.withEnc, 'btn-primary': !globalConfig.withEnc}"
-                      ng-disabled="globalConfig.loading" ng-file-select ng-mouseover="NetUtils.getUploadToken()">
+    <div class="container-fluid">
+        <div class="row" ng-hide="Config.isLogin">
+            <div class="col-sm-6 col-md-4 col-md-offset-4">
+                <div class="account-wall">
+                    <form class="form-signin" ng-submit="NetUtils.login()">
+                        <input type="text" class="form-control" ng-model="Config.domain" placeholder="认证域名，eg：secloud-demo.coding.io" required autofocus>
+                        <input type="password" class="form-control" ng-model="Config.secKey" placeholder="安全密码" required>
+                        <button class="btn btn-lg btn-primary btn-block" ng-disabled="!Config.domain || !Config.secKey" type="submit">登 录</button>
+                    </form>
+                </div> <a href="https://github.com/int64ago/secloud" target="_blank" class="text-center new-account"><i class="fa fa-github"></i> 需要帮助</a>
+            </div>
+        </div>
+        <div class="row" ng-show="Config.isLogin">
+            <div class="shadow-z-1">
+                <div class="btn-group" style="margin-left: 10px">
+                    <a class="btn btn-info btn-sm" href="javascript:void(0)" ng-click="globalConfig.withEnc = !globalConfig.withEnc" style="padding-left: 10px; padding-right: 10px;">
+                        <i class="fa fa-lg" ng-class="{'fa-lock': globalConfig.withEnc, 'fa-unlock-alt': !globalConfig.withEnc}"></i>
+                    </a>
+                    <span class="btn btn-sm btn-file" ng-class="{'btn-warning': globalConfig.withEnc, 'btn-primary': !globalConfig.withEnc}" ng-disabled="globalConfig.loading" ng-file-select ng-mouseover="NetUtils.getUploadToken()">
                     <i class="fa fa-cloud-upload fa-lg"></i> {{globalConfig.withEnc?'加密上传':'普通上传'}}<input type="file">
                 </span>
-            </div>
-            <button class="btn btn-primary btn-sm" ng-click="FileList.refresh()"> <i class="fa fa-refresh fa-lg"></i> 刷新</button>
-            <span class="btn btn-primary btn-sm" ng-show="FileList.curChecked && FileList.curChecked.encrypted" ng-click="NetUtils.downloadFile(FileList.curChecked)"
-                  ng-disabled="NetUtils.isDownloading" ng-mouseover="NetUtils.getDownloadUrl(FileList.curChecked)">
+                </div>
+                <button class="btn btn-primary btn-sm" ng-click="FileList.refresh()"> <i class="fa fa-refresh fa-lg"></i> 刷新</button>
+                <span class="btn btn-primary btn-sm" ng-show="FileList.curChecked && FileList.curChecked.encrypted" ng-click="NetUtils.downloadFile(FileList.curChecked)" ng-disabled="NetUtils.isDownloading" ng-mouseover="NetUtils.getDownloadUrl(FileList.curChecked)">
               <i class="fa fa-cloud-download fa-lg"></i> 下载
             </span>
-            <a class="btn btn-primary btn-sm" ng-hide="FileList.curChecked && FileList.curChecked.encrypted" ng-disabled="!FileList.curChecked"
-                ng-href="{{globalConfig.downloadUrl}}" ng-mouseover="NetUtils.getDownloadUrl(FileList.curChecked)" download>
-              <i class="fa fa-cloud-download fa-lg"></i> 下载
-            </a>
-            <button class="btn btn-primary btn-sm" ng-disabled="!FileList.curChecked" ng-click="FileList.renameFile(FileList.curChecked)">
-              <i class="fa fa-pencil-square-o fa-lg"></i> 重命名
-            </button>
-            <button class="btn btn-primary btn-sm" ng-disabled="!FileList.curChecked" ng-click="FileList.deleteFile(FileList.curChecked)">
-              <i class="fa fa-times fa-lg"></i> 删除
-            </button>
-            <img src="http://int64ago.qiniudn.com/o_19clsd0ih16fhsvfclue191p9.gif" ng-show="NetUtils.isDownloading"></img>
-            <span class="label label-info" style="margin-left: 5px;" ng-show="globalConfig.loading && !globalConfig.uploadOK && !globalConfig.uploadFaild">{{globalConfig.process}}%</span>
-            <span class="label label-info" style="margin-left: 5px;" ng-bind="globalConfig.uploadOK?'上传成功':''"></span>
-            <span class="label label-danger" style="margin-left: 5px;" ng-bind="globalConfig.uploadFaild?'上传失败':''"></span>
-            <ol class="breadcrumb" style="margin-bottom:0px">
-                <li ng-repeat="folder in FilePath.paths" ng-click="FilePath.gotoFolder($index)">
-                  <a href="javascript:void(0)" ng-bind="folder.name"></a>
-                </li>
-                <li>
-                  <a href="javascript:void(0)" title="New Folder" ng-click="FilePath.addFolder()"><i class="fa fa-plus"></i></a>
-                </li>
-            </ol>
+                <a class="btn btn-primary btn-sm" ng-hide="FileList.curChecked && FileList.curChecked.encrypted" ng-disabled="!FileList.curChecked" ng-href="{{globalConfig.downloadUrl}}" ng-mouseover="NetUtils.getDownloadUrl(FileList.curChecked)" download>
+                    <i class="fa fa-cloud-download fa-lg"></i> 下载
+                </a>
+                <button class="btn btn-primary btn-sm" ng-disabled="!FileList.curChecked" ng-click="FileList.renameFile(FileList.curChecked)">
+                    <i class="fa fa-pencil-square-o fa-lg"></i> 重命名
+                </button>
+                <button class="btn btn-primary btn-sm" ng-disabled="!FileList.curChecked" ng-click="FileList.deleteFile(FileList.curChecked)">
+                    <i class="fa fa-times fa-lg"></i> 删除
+                </button>
+                <img src="https://dn-getlink.qbox.me/qt5bvu2z9f6r.gif" ng-show="NetUtils.isDownloading"></img>
+                <span class="label label-info" style="margin-left: 5px;" ng-show="globalConfig.loading && !globalConfig.uploadOK && !globalConfig.uploadFaild">{{globalConfig.process}}%</span>
+                <span class="label label-info" style="margin-left: 5px;" ng-bind="globalConfig.uploadOK?'上传成功':''"></span>
+                <span class="label label-danger" style="margin-left: 5px;" ng-bind="globalConfig.uploadFaild?'上传失败':''"></span>
+                <ol class="breadcrumb" style="margin-bottom:0px">
+                    <li ng-repeat="folder in FilePath.paths" ng-click="FilePath.gotoFolder($index)">
+                        <a href="javascript:void(0)" ng-bind="folder.name"></a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)" title="New Folder" ng-click="FilePath.addFolder()"><i class="fa fa-plus"></i></a>
+                    </li>
+                </ol>
+            </div>
+            <div class="progress progress-striped" style="margin-bottom: 0px;" ng-show="globalConfig.loading">
+                <div class="progress-bar progress-bar-info" ng-style="{'width':  globalConfig.process + '%'}"></div>
+            </div>
+            <div class="container" ng-hide="FileList.qnFiles">
+                <img class="loading-img" ng-hide="NetUtils.firstUser" src="https://dn-getlink.qbox.me/qt5bvu2z9f6r.gif"></img>
+            </div>
+            <table class="table" ng-show="FileList.qnFiles">
+                <thead>
+                    <tr>
+                        <th style="padding-left:50px;">文件名</th>
+                        <th>最后更新时间</th>
+                        <th>文件大小</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="file in FileList.list | orderBy:'time'">
+                        <td>
+                            <i class="fa fa-check" ng-class="{'dis-checked': !file.checked, 'is-checked': file.checked}"></i>
+                            <button class="btn btn-default btn-sm clsbtn" ng-click="FileList.updateCheck(file)">
+                                <i class="{{FileList.getFileIcon(file)}}"></i> <span ng-bind="file.name"></span>
+                            </button>
+                            <i class="fa fa-lock" ng-show="file.encrypted" style="color: green"></i>
+                            <a href="javascript:void(0)" title="预览" ng-show="!file.encrypted && FileList.isPreviewable(file)" ng-click="FileList.previewMedia(file)">
+                                <i class="fa fa-eye" style="color: #03a9f4"></i>
+                            </a>
+                        </td>
+                        <td ng-bind="file.time"></td>
+                        <td ng-bind="file.size"></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-        <div class="progress progress-striped" style="margin-bottom: 0px;" ng-show="globalConfig.loading">
-          <div class="progress-bar progress-bar-info" ng-style="{'width':  globalConfig.process + '%'}"></div>
-        </div>
-        <div class="container" ng-hide="FileList.qnFiles">
-            <img class="loading-img" ng-hide="NetUtils.firstUser" src="http://int64ago.qiniudn.com/o_19cjhn4mq9bh1cde1plv16781jsu9.gif"></img>
-        </div>
-        <table class="table" ng-show="FileList.qnFiles">
-            <thead>
-                <tr>
-                    <th style="padding-left:50px;">文件名</th>
-                    <th>最后更新时间</th>
-                    <th>文件大小</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="file in FileList.list | orderBy:'time'">
-                    <td>
-                      <i class="fa fa-check" ng-class="{'dis-checked': !file.checked, 'is-checked': file.checked}"></i>
-                      <button class="btn btn-default btn-sm clsbtn" ng-click="FileList.updateCheck(file)">
-                        <i class="{{FileList.getFileIcon(file)}}"></i>  <span ng-bind="file.name"></span>
-                      </button>
-                      <i class="fa fa-lock" ng-show="file.encrypted" style="color: green"></i>
-                      <a href="javascript:void(0)" title="预览" ng-show="!file.encrypted && FileList.isPreviewable(file)" ng-click="FileList.previewMedia(file)">
-                        <i class="fa fa-eye" style="color: #03a9f4"></i>
-                      </a>
-                    </td>
-                    <td ng-bind="file.time"></td>
-                    <td ng-bind="file.size"></td>
-                </tr>
-            </tbody>
-        </table>
     </div>
-</div>
-<script>
+    <script>
     if (navigator.userAgent.indexOf('MSIE') !== -1 || navigator.appVersion.indexOf('Trident/') > 0) {
         alert('为了更好的体验，请使用Chrome/Firefox/Safari等浏览器访问');
     }
-</script>
+    </script>
 </body>
+
 </html>
