@@ -24,7 +24,7 @@
   - 有七牛账号，最好通过实名认证（不然免费额度恐怕不够）
   - 有Coding账号，可能还需要知道git一点基本用法
 
-客户端地址：https://secloud.xyz/ ，如个人不作修改则无需重新部署，
+客户端地址：http://secloud.xyz/ ，如个人不作修改则无需重新部署，
 客户端认证的时候需要`认证域名`和`安全密码`，这里的`认证域名`即个人部署的服务端域名，服务端部署前需要：
 
 七牛新建一个`BUCKET`，并且设为私有
@@ -52,7 +52,7 @@ OK，此时记下：`BUCKET`、`DOMAIN`、`ACCESS_KEY`、`SECRET_KEY`、`PASSWD`
 部署设置，设置完之后一键部署即可
 ![][10]
 
-在 https://secloud.xyz/ 登录
+在 http://secloud.xyz/ 登录
 ![][11]
 
 网盘主界面
@@ -69,5 +69,5 @@ OK，此时记下：`BUCKET`、`DOMAIN`、`ACCESS_KEY`、`SECRET_KEY`、`PASSWD`
   [10]: https://dn-getlink.qbox.me/oriysmglgcik9.png
   [11]: https://dn-getlink.qbox.me/oriysmglgcik9.png
   [12]: https://dn-getlink.qbox.me/ku48e5k2fn7b9.png
-  [13]: https://secloud.xyz/
+  [13]: http://secloud.xyz/
   [14]: https://github.com/int64ago/secloud-server
