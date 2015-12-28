@@ -58,7 +58,7 @@ app.controller('SECloudCtrl', function($scope, $rootScope, $http, $filter, $moda
     };
 
     $scope.Config = {
-        domain: localStorage.domain || '',
+        domain: localStorage.domain || 'secloud-demo.coding.io',
         secKey: '',
         isLogin: true
     };
