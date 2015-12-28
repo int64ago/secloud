@@ -24,14 +24,13 @@
   - 有七牛账号，最好通过实名认证（不然免费额度恐怕不够）
   - 有Coding账号，可能还需要知道git一点基本用法
 
-客户端地址：http://secloud.int64ago.org/ ，如个人不作修改则无需重新部署，
+客户端地址：https://secloud.xyz/ ，如个人不作修改则无需重新部署，
 客户端认证的时候需要`认证域名`和`安全密码`，这里的`认证域名`即个人部署的服务端域名，服务端部署前需要：
 
 七牛新建一个`BUCKET`，并且设为私有
 ![][3]
 
 得到空间的域名`DOMAIN`
-![][4]
 
 获得`ACCESS_KEY`和`SECRET_KEY`
 ![][5]
@@ -46,7 +45,6 @@ OK，此时记下：`BUCKET`、`DOMAIN`、`ACCESS_KEY`、`SECRET_KEY`、`PASSWD`
 ![][7]
 
 开启演示
-![][8]
 
 设置环境变量（之前让记下的）
 ![][9]
@@ -54,7 +52,7 @@ OK，此时记下：`BUCKET`、`DOMAIN`、`ACCESS_KEY`、`SECRET_KEY`、`PASSWD`
 部署设置，设置完之后一键部署即可
 ![][10]
 
-在http://secloud.int64ago.org/ 登录
+在 https://secloud.xyz/ 登录
 ![][11]
 
 网盘主界面
@@ -63,15 +61,13 @@ OK，此时记下：`BUCKET`、`DOMAIN`、`ACCESS_KEY`、`SECRET_KEY`、`PASSWD`
 
   [1]: http://www.qiniu.com/
   [2]: https://coding.net/
-  [3]: http://int64ago.qiniudn.com/o_19clbrnkj1f7s1q72ptju12lpd9.png
-  [4]: http://int64ago.qiniudn.com/o_19clc11lsig6a1r1bvvsumrp89.png
-  [5]: http://int64ago.qiniudn.com/o_19clc2b681ojuc6o1a7u1jps181r9.png
+  [3]: https://dn-getlink.qbox.me/walco4scbx1or.png
+  [5]: https://dn-getlink.qbox.me/43fwztyory66r.png
   [6]: http://tool.oschina.net/encrypt?type=2
-  [7]: http://int64ago.qiniudn.com/o_19clci3a01i2918in1mue1nthndre.png
-  [8]: http://int64ago.qiniudn.com/o_19clcnleuvq8ralqoi1tde1fh9j.png
-  [9]: http://int64ago.qiniudn.com/o_19clcq8mm1dbk6oel761v5g1rdro.png
-  [10]: http://int64ago.qiniudn.com/o_19clcsbcsjct1svt1un01ei71kpq9.png
-  [11]: http://int64ago.qiniudn.com/o_19cqc7n5qsbuqd91tei34b089.png
-  [12]: http://int64ago.qiniudn.com/o_19cqcb8e9shsjhkt7f1bas16umj.png
-  [13]: http://secloud.int64ago.org/
+  [7]: https://dn-getlink.qbox.me/95gxy2ry0hpvi.png
+  [9]: https://dn-getlink.qbox.me/855fhcjhpk3xr.png
+  [10]: https://dn-getlink.qbox.me/oriysmglgcik9.png
+  [11]: https://dn-getlink.qbox.me/oriysmglgcik9.png
+  [12]: https://dn-getlink.qbox.me/ku48e5k2fn7b9.png
+  [13]: https://secloud.xyz/
   [14]: https://github.com/int64ago/secloud-server
